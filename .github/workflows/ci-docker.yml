@@ -1,23 +1,21 @@
 name: CI with Docker
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  push:                # Trigger on every commit to any branch
+  pull_request:        # Also trigger on every PR targeting any branch
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Build Docker image
-      run: |
-        docker build -t sql-pytest-app .
+      - name: Build Docker image
+        run: |
+          docker build -t sql-pytest-app .
 
-    - name: Run tests inside Docker container
-      run: |
-        docker run --rm sql-pytest-app
+      - name: Run tests inside Docker container
+        run: |
+          docker run --rm sql-pytest-app
