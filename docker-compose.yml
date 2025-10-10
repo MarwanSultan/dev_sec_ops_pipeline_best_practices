@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+  # ---------- Test Framework ----------
+  test_framework:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test_framework
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+    command: python src/runner.py
+    networks:
+      - monitoring_net
+
+  # ---------- Prometheus ----------
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring_net
+
+  # ---------- Grafana ----------
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+      - ./monitoring/grafana/dashboards:/var/lib/grafana/dashboards
+    depends_on:
+      - prometheus
+    networks:
+      - monitoring_net
+
+networks:
+  monitoring_net:
+    driver: bridge

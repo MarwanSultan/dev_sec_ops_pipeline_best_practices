@@ -1,25 +1,23 @@
 # Use slim Python base image
 FROM python:3.11-slim
 
-# Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Create working directory
-WORKDIR /app
+WORKDIR /dev_sec_ops_pipeline_containerized_test_framework
 
-# Copy project files
-COPY . /app
+COPY . /dev_sec_ops_pipeline_containerized_test_framework
 
-# Install Python dependencies
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-# Default command (can be overridden by GitHub Actions)
-CMD ["pytest", "--tb=short", "--disable-warnings"]
+# Expose the port where metrics will be served
+EXPOSE 8000
+
+# Run pytest with junit xml output, then start metrics exporter
+CMD pytest --junitxml=results.xml --tb=short --disable-warnings && python metrics_exporter.py

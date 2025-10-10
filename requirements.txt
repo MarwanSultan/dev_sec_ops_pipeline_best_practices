@@ -1,3 +1,4 @@
 sqlalchemy
 pytest
 faker
+prometheus_client
