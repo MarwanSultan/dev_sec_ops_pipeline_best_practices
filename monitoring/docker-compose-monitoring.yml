@@ -2,13 +2,17 @@ version: '3.8'
 services:
   prometheus:
     image: prom/prometheus:latest
+    container_name: prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
+    networks:
+      - monitoring_net
 
   grafana:
     image: grafana/grafana:latest
+    container_name: grafana
     ports:
       - "3000:3000"
     environment:
@@ -19,3 +23,9 @@ services:
       - ./grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - prometheus
+    networks:
+      - monitoring_net
+
+networks:
+  monitoring_net:
+    driver: bridge

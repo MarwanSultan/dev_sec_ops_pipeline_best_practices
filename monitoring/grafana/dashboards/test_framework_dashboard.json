@@ -1,31 +1,29 @@
 {
-  "dashboard": {
-    "id": null,
-    "uid": null,
-    "title": "Test Framework Metrics",
-    "tags": ["qa", "automation", "tests"],
-    "timezone": "browser",
-    "panels": [
-      {
-        "type": "graph",
-        "title": "Total Test Runs",
-        "targets": [{"expr": "test_runs_total", "legendFormat": "Runs"}],
-        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
-      },
-      {
-        "type": "graph",
-        "title": "Total Test Failures",
-        "targets": [{"expr": "test_failures_total", "legendFormat": "Failures"}],
-        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
-      },
-      {
-        "type": "graph",
-        "title": "Test Duration (seconds)",
-        "targets": [{"expr": "test_duration_seconds", "legendFormat": "Duration"}],
-        "gridPos": {"x": 0, "y": 8, "w": 24, "h": 8}
-      }
-    ],
-    "schemaVersion": 30,
-    "version": 1
-  }
+  "id": null,
+  "uid": "test-framework-metrics",
+  "title": "Test Framework Metrics",
+  "tags": ["qa", "automation", "tests"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "panels": [
+    {
+      "type": "stat",
+      "title": "Total Test Runs",
+      "targets": [{"expr": "test_runs_total", "legendFormat": "Runs"}],
+      "gridPos": {"x": 0, "y": 0, "w": 12, "h": 6}
+    },
+    {
+      "type": "stat",
+      "title": "Total Test Failures",
+      "targets": [{"expr": "test_failures_total", "legendFormat": "Failures"}],
+      "gridPos": {"x": 12, "y": 0, "w": 12, "h": 6}
+    },
+    {
+      "type": "stat",
+      "title": "Test Duration (seconds)",
+      "targets": [{"expr": "test_duration_seconds", "legendFormat": "Duration"}],
+      "gridPos": {"x": 0, "y": 6, "w": 24, "h": 6}
+    }
+  ]
 }
